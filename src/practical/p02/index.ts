@@ -39,14 +39,14 @@ export const addUser = async (
   newUserData: NewUserInput | null
 ): Promise<User[]> => {
   try {
-    const res = await axios.get<User[]>("https://jsonplaceholder.typicode.com/users");
-    const users: User[] = res.data.map((u) => 
-      ({
+    const res = await axios.get("https://jsonplaceholder.typicode.com/users");
+
+    const users: User[] = res.data.map((u: User) => ({
       id: u.id,
       name: u.name ?? null,
       phone: u.phone ?? null,
-      address: u.address? 
-      {
+      address: u.address
+        ? {
             street: u.address.street ?? null,
             suite: u.address.suite ?? null,
             city: u.address.city ?? null,
@@ -55,16 +55,19 @@ export const addUser = async (
               ? {
                   lat: u.address.geo.lat ?? null,
                   lng: u.address.geo.lng ?? null,
-                }: null,
-          }: null,
+                }
+              : null,
+          }
+        : null,
     }));
+
     if (newUserData === null) {
       return users;
     }
+
     const lastId = users[users.length - 1].id;
-    const newId = lastId + 1;
     const newUser: User = {
-      id: newId,
+      id: lastId + 1,
       name: newUserData.name ?? null,
       phone: newUserData.phone ?? null,
       address: newUserData.address
@@ -82,9 +85,9 @@ export const addUser = async (
           }
         : null,
     };
+
     return users.concat(newUser);
-  } 
-  catch(err){
+  } catch (err) {
     throw err;
   }
 };
