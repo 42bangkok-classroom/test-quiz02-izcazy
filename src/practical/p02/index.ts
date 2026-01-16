@@ -35,7 +35,7 @@ type NewUserInput = {
         };
       }
     | null;
-}
+} | null;
 
 export const addUser = async (
   newUserData: NewUserInput | null
