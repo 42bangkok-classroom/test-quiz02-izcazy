@@ -23,17 +23,19 @@ type User = {
 type NewUserInput = {
   name?: string;
   phone?: string;
-  address?: {
-    street?: string;
-    suite?: string;
-    city?: string;
-    zipcode?: string;
-    geo?: {
-      lat?: string;
-      lng?: string;
-    };
-  };
-};
+  address?:
+    | {
+        street?: string;
+        suite?: string;
+        city?: string;
+        zipcode?: string;
+        geo?: {
+          lat?: string;
+          lng?: string;
+        };
+      }
+    | null;
+}
 
 export const addUser = async (
   newUserData: NewUserInput | null
